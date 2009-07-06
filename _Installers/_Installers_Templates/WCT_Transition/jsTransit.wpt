@@ -1,0 +1,62 @@
+$=<TITLE:On change Transition>$=<SHOWINTRAY:BEYE_ROOT>$=<CATEG:Wallpaper modifiers>
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(MUSTBE),NO-DUPS>
+$=<PARDEF:BEYE_ROOT>$=<PARDSC:BEYE_ROOT=Transition options>$=<PARTYP:BEYE_ROOT=root>
+$=<PARDEF:DURA=2>$=<PARDSC:DURA=Effect duration>$=<PARPAR:DURA=BEYE_ROOT>$=<PARTYP:DURA=number>$=<PARMIN:DURA=1>$=<PARMAX:DURA=10000>
+$=<PARDEF:E1=1>$=<PARDSC:E1=Use 'Box in'>$=<PARPAR:E1=PARAM_ROOT>$=<PARTYP:E1=bool>
+$=<PARDEF:E2=1>$=<PARDSC:E2=Use 'Box out'>$=<PARPAR:E2=PARAM_ROOT>$=<PARTYP:E2=bool>
+$=<PARDEF:E3=1>$=<PARDSC:E3=Use 'Circle in'>$=<PARPAR:E3=PARAM_ROOT>$=<PARTYP:E3=bool>
+$=<PARDEF:E4=1>$=<PARDSC:E4=Use 'Circle out'>$=<PARPAR:E4=PARAM_ROOT>$=<PARTYP:E4=bool>
+$=<PARDEF:E5=1>$=<PARDSC:E5=Use 'Wipe up'>$=<PARPAR:E5=PARAM_ROOT>$=<PARTYP:E5=bool>
+$=<PARDEF:E6=1>$=<PARDSC:E6=Use 'Wipe down'>$=<PARPAR:E6=PARAM_ROOT>$=<PARTYP:E6=bool>
+$=<PARDEF:E7=1>$=<PARDSC:E7=Use 'Wipe right'>$=<PARPAR:E7=PARAM_ROOT>$=<PARTYP:E7=bool>
+$=<PARDEF:E8=1>$=<PARDSC:E8=Use 'Wipe left'>$=<PARPAR:E8=PARAM_ROOT>$=<PARTYP:E8=bool>
+$=<PARDEF:E9=1>$=<PARDSC:E9=Use 'Vertical blinds'>$=<PARPAR:E9=PARAM_ROOT>$=<PARTYP:E9=bool>
+$=<PARDEF:E10=1>$=<PARDSC:E10=Use 'Horizontal blinds'>$=<PARPAR:E10=PARAM_ROOT>$=<PARTYP:E10=bool>
+$=<PARDEF:E11=1>$=<PARDSC:E11=Use 'Checkerboard across'>$=<PARPAR:E11=PARAM_ROOT>$=<PARTYP:E11=bool>
+$=<PARDEF:E12=1>$=<PARDSC:E12=Use 'Checkerboard down'>$=<PARPAR:E12=PARAM_ROOT>$=<PARTYP:E12=bool>
+$=<PARDEF:E13=1>$=<PARDSC:E13=Use 'Random dissolve'>$=<PARPAR:E13=PARAM_ROOT>$=<PARTYP:E13=bool>
+$=<PARDEF:E14=1>$=<PARDSC:E14=Use 'Split vertical in'>$=<PARPAR:E14=PARAM_ROOT>$=<PARTYP:E14=bool>
+$=<PARDEF:E15=1>$=<PARDSC:E15=Use 'Split vertical out'>$=<PARPAR:E15=PARAM_ROOT>$=<PARTYP:E15=bool>
+$=<PARDEF:E16=1>$=<PARDSC:E16=Use 'Split horizontal in'>$=<PARPAR:E16=PARAM_ROOT>$=<PARTYP:E16=bool>
+$=<PARDEF:E17=1>$=<PARDSC:E17=Use 'Split horizontal out'>$=<PARPAR:E17=PARAM_ROOT>$=<PARTYP:E17=bool>
+$=<PARDEF:E18=1>$=<PARDSC:E18=Use 'Strips left down'>$=<PARPAR:E18=PARAM_ROOT>$=<PARTYP:E18=bool>
+$=<PARDEF:E19=1>$=<PARDSC:E19=Use 'Strips left up'>$=<PARPAR:E19=PARAM_ROOT>$=<PARTYP:E19=bool>
+$=<PARDEF:E20=1>$=<PARDSC:E20=Use 'Strips right down'>$=<PARPAR:E20=PARAM_ROOT>$=<PARTYP:E20=bool>
+$=<PARDEF:E21=1>$=<PARDSC:E21=Use 'Strips right up'>$=<PARPAR:E21=PARAM_ROOT>$=<PARTYP:E21=bool>
+$=<PARDEF:E22=1>$=<PARDSC:E22=Use 'Random bars horizontal'>$=<PARPAR:E22=PARAM_ROOT>$=<PARTYP:E22=bool>
+$=<PARDEF:E23=1>$=<PARDSC:E23=Use 'Random bars vertical'>$=<PARPAR:E23=PARAM_ROOT>$=<PARTYP:E23=bool>
+$=<PARDEF:E24=1>$=<PARDSC:E24=Use 'Random transition from above possible values'>$=<PARPAR:E24=PARAM_ROOT>$=<PARTYP:E24=bool>
+
+$=<PAR:CUTLINE>
+<!--$=<_REPLACE_BG>$=<_WALLPAPER_FEATURED>.pre$=</_REPLACE_BG>-->
+<img id="transitionsImage" src="$=<_WALLPAPER_FEATURED>" width=100% height=100%
+style="
+	position:absolute;
+	z-index:2;
+	top:0px;
+	left:0px;
+	height:{screenY}px;
+	width:{screenX}px;
+	visibility:visible;
+	filter:revealTrans(DURATION=$=<PAR:DURA>, TRANSITION=
+ 	{wp:list.rnd}
+	$=<IF:$=<PAR:E1>==1?0/IF>,
+	$=<IF:$=<PAR:E2>==1?1/IF>,$=<IF:$=<PAR:E3>==1?2/IF>,
+	$=<IF:$=<PAR:E4>==1?3/IF>,$=<IF:$=<PAR:E5>==1?4/IF>,
+	$=<IF:$=<PAR:E6>==1?5/IF>,$=<IF:$=<PAR:E7>==1?6/IF>,
+	$=<IF:$=<PAR:E8>==1?7/IF>,$=<IF:$=<PAR:E9>==1?8/IF>,
+	$=<IF:$=<PAR:E10>==1?9/IF>,$=<IF:$=<PAR:E11>==1?10/IF>,
+	$=<IF:$=<PAR:E12>==1?11/IF>,$=<IF:$=<PAR:E13>==1?12/IF>,
+	$=<IF:$=<PAR:E14>==1?13/IF>,$=<IF:$=<PAR:E15>==1?14/IF>,
+	$=<IF:$=<PAR:E16>==1?15/IF>,$=<IF:$=<PAR:E17>==1?16/IF>,
+	$=<IF:$=<PAR:E18>==1?17/IF>,$=<IF:$=<PAR:E19>==1?18/IF>,
+	$=<IF:$=<PAR:E20>==1?19/IF>,$=<IF:$=<PAR:E21>==1?20/IF>,
+	$=<IF:$=<PAR:E22>==1?21/IF>,$=<IF:$=<PAR:E23>==1?22/IF>,
+	$=<IF:$=<PAR:E24>==1?23/IF>
+	{/wp:list.rnd}
+	);
+">
+<script language=JScript>
+document.all['transitionsImage'].filters[0].Apply();
+document.all['transitionsImage'].filters[0].Play();
+</script>

@@ -1,0 +1,5 @@
+This is additional plugin for WireKeys by Razinkov Ilja (IPv6). This plugin allows you to sync your clock with atomic clock
+
+Legal notice:
+This plugin is delivered "AS IS" and without warranties whether expressed or implied. Because of the various software and hardware environments into which this program may be put, no warranty of fitness for a particular purpose is offered. 
+All rights to WireKeys and this plugin are exclusively owned by the author - Razinkov Ilja - and WiredPlane labs. All title and copyrights in and to the WireKeys, as well as any backup copy made by you, are owned by WiredPlane labs and may be protected by applicable copyright or other intellectual property laws and treaties. Except as stated above, this agreement does not grant you any rights to patents, trade secrets, trademarks, copyrights or any other rights in respect of the Software.

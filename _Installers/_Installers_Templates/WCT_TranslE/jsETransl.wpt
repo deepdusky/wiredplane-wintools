@@ -1,0 +1,42 @@
+$=<TITLE:BabelFish Translater>$=<SHOWINTRAY:BEYE_ROOT>$=<CATEG:Useful controls>
+tray-position{OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)}
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(MUSTBE)>
+$=<PARDEF:BEYE_ROOT>$=<PARDSC:BEYE_ROOT=Translation options>$=<PARTYP:BEYE_ROOT=root>
+$=<PARDEF:BEYE_TRIM=1>$=<PARDSC:BEYE_TRIM=Show 'Translate' button>$=<PARTYP:BEYE_TRIM=bool>
+$=<PARDEF:BEYE_SPOS>$=<PARDSC:BEYE_SPOS=Set translation bar position>$=<PARPAR:BEYE_SPOS=BEYE_ROOT>$=<PARTYP:BEYE_SPOS=set_position>$=<PARACTION:BEYE_SPOS=OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)/>
+$=<PARDEF:BEYE_XPOS=255>$=<PARDSC:BEYE_XPOS=X Position (pixels)>$=<PARTYP:BEYE_XPOS=number>$=<PARMIN:BEYE_XPOS=0>$=<PARMAX:BEYE_XPOS=$=<SCREEN_X>>$=<PAROC:BEYE_XPOS=1>$=<PARPAR:BEYE_XPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_YPOS=$=<INTEXPR($=<SCREEN_Y>-225)>>$=<PARDSC:BEYE_YPOS=Y Position (pixels)>$=<PARTYP:BEYE_YPOS=number>$=<PARMIN:BEYE_YPOS=0>$=<PARMAX:BEYE_YPOS=$=<SCREEN_Y>>$=<PAROC:BEYE_YPOS=1>$=<PARPAR:BEYE_YPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_WIDTH=205>$=<PARDSC:BEYE_WIDTH=Width (pixels)>$=<PARTYP:BEYE_WIDTH=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_WIDTH=$=<SCREEN_X>>$=<PAROC:BEYE_WIDTH=1>$=<PARPAR:BEYE_WIDTH=BEYE_SPOS>
+$=<PARDEF:BEYE_HEIGHT=102>$=<PARDSC:BEYE_HEIGHT=Height (pixels)>$=<PARTYP:BEYE_HEIGHT=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_HEIGHT=$=<SCREEN_Y>>$=<PAROC:BEYE_HEIGHT=1>$=<PARPAR:BEYE_HEIGHT=BEYE_SPOS>
+
+$=<PAR:CUTLINE>
+<iframe
+id="BBFishFrame"
+SCROLLING=NO
+HSPACE=1
+VSPACE=1
+MARGINHEIGHT=1
+MARGINWIDTH=1
+allowTransparency="true"
+style="position:absolute;
+ z-index:50;
+ background-color: transparent;
+ top:$=<PAR:BEYE_YPOS>px;left:$=<PAR:BEYE_XPOS>px;
+ height:$=<PAR:BEYE_HEIGHT>px;width:$=<PAR:BEYE_WIDTH>px;
+ border:0;border-style:solid;"
+>
+</iframe>
+<script language=JScript>
+function GetIFrame()
+{
+	return '<ht'+'ml><me'+'ta http-equiv="content-type" content="text/html; charset=UTF-8"><body style="background-color: transparent;">'+
+	'<table border=0 width=100% height=100%><tr><td align=center valign=center><form method=post target=_blank action="http://babelfish.altavista.com/tr">'+
+	'<input type=hidden name=doit value="done"> <input type=hidden name=intl value="1"> <input type=text name=trtext style="width: 100%"><br>'+
+	'<select name="lp" style="font-size:0.8em;" tabindex="1" class="button"> <option value="">Select from and to languages</option> <option value="zh_en">Chinese-simp to English</option> <option value="zt_en">Chinese-trad to English</option> <option value="en_zh">English to Chinese-simp</option> <option value="en_zt">English to Chinese-trad</option> <option value="en_nl">English to Dutch</option> <option value="en_fr">English to French</option> <option value="en_de">English to German</option> <option value="en_el">English to Greek</option> <option value="en_it">English to Italian</option> <option value="en_ja">English to Japanese</option> <option value="en_ko">English to Korean</option> <option value="en_pt">English to Portuguese</option> <option value="en_ru">English to Russian</option> <option value="en_es">English to Spanish</option> <option value="nl_en">Dutch to English</option> <option value="nl_fr">Dutch to French</option> <option value="fr_en">French to English</option> <option value="fr_de">French to German</option> <option value="fr_el">French to Greek</option> <option value="fr_it">French to Italian</option> <option value="fr_pt">French to Portuguese</option> <option value="fr_nl">French to Dutch</option> <option value="fr_es">French to Spanish</option> <option value="de_en">German to English</option> <option value="de_fr">German to French</option> <option value="el_en">Greek to English</option> <option value="el_fr">Greek to French</option> <option value="it_en">Italian to English</option> <option value="it_fr">Italian to French</option> <option value="ja_en">Japanese to English</option> <option value="ko_en">Korean to English</option> <option value="pt_en">Portuguese to English</option> <option value="pt_fr">Portuguese to French</option> <option value="ru_en">Russian to English</option> <option value="es_en">Spanish to English</option> <option value="es_fr">Spanish to French</option></select>'+
+	'$=<IF:$=<PAR:BEYE_TRIM>==1?<br><input type=submit value="$=<TEXTLINE(comm_l$=<LANG>.txt,Translate=)>" style="color: #336699; border: outset 1px 1px 1px 1px; border-color: #9fdfff; background-color: #cfefff; font-size: 8pt; font-weight:bold">/IF>'+
+	'</form></td></tr></table></bo'+'dy></ht'+'ml>';
+}
+document.frames("BBFishFrame").document.open();
+document.frames("BBFishFrame").document.write(GetIFrame());
+document.frames("BBFishFrame").document.close();
+</script>

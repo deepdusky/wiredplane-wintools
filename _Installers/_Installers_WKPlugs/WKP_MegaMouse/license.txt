@@ -1,0 +1,6 @@
+This is screen magnifier plugin for WireKeys written by Pharaon
+
+Legal notice:
+This plugin is delivered "AS IS" and without warranties whether expressed or implied. Because of the various software and hardware environments into which this program may be put, no warranty of fitness for a particular purpose is offered. 
+All rights to this plugin are exclusively owned by the author - Pharaon. This agreement does not grant you any rights to patents, trade secrets, trademarks, copyrights or any other rights in respect of the plugin.
+

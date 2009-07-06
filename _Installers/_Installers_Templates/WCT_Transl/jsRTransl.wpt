@@ -1,0 +1,39 @@
+$=<TITLE:Translater>$=<SHOWINTRAY:BEYE_ROOT>$=<CATEG:Useful controls>
+tray-position{OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)}
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(DONTCARE)>
+$=<PARDEF:BEYE_ROOT>$=<PARDSC:BEYE_ROOT=Translation options>$=<PARTYP:BEYE_ROOT=root>
+$=<PARDEF:BEYE_TYPE=0>$=<PARDSC:BEYE_TYPE=Language>$=<PARTYP:BEYE_TYPE=list>$=<PARLST:BEYE_TYPE=English,German,French,Italian,Spanish>
+$=<PARDEF:BEYE_TRIM=1>$=<PARDSC:BEYE_TRIM=Show 'Translate' button>$=<PARTYP:BEYE_TRIM=bool>
+
+$=<PARDEF:BEYE_SPOS>$=<PARDSC:BEYE_SPOS=Set translation bar position>$=<PARPAR:BEYE_SPOS=BEYE_ROOT>$=<PARTYP:BEYE_SPOS=set_position>$=<PARACTION:BEYE_SPOS=OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)/>
+$=<PARDEF:BEYE_XPOS=255>$=<PARDSC:BEYE_XPOS=X Position (pixels)>$=<PARTYP:BEYE_XPOS=number>$=<PARMIN:BEYE_XPOS=0>$=<PARMAX:BEYE_XPOS=$=<SCREEN_X>>$=<PAROC:BEYE_XPOS=1>$=<PARPAR:BEYE_XPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_YPOS=$=<INTEXPR($=<SCREEN_Y>-225)>>$=<PARDSC:BEYE_YPOS=Y Position (pixels)>$=<PARTYP:BEYE_YPOS=number>$=<PARMIN:BEYE_YPOS=0>$=<PARMAX:BEYE_YPOS=$=<SCREEN_Y>>$=<PAROC:BEYE_YPOS=1>$=<PARPAR:BEYE_YPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_WIDTH=205>$=<PARDSC:BEYE_WIDTH=Width (pixels)>$=<PARTYP:BEYE_WIDTH=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_WIDTH=$=<SCREEN_X>>$=<PAROC:BEYE_WIDTH=1>$=<PARPAR:BEYE_WIDTH=BEYE_SPOS>
+$=<PARDEF:BEYE_HEIGHT=102>$=<PARDSC:BEYE_HEIGHT=Height (pixels)>$=<PARTYP:BEYE_HEIGHT=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_HEIGHT=$=<SCREEN_Y>>$=<PAROC:BEYE_HEIGHT=1>$=<PARPAR:BEYE_HEIGHT=BEYE_SPOS>
+
+$=<PAR:CUTLINE>
+<table style="position:absolute;top:$=<PAR:BEYE_YPOS>px;left:$=<PAR:BEYE_XPOS>px;height:$=<PAR:BEYE_HEIGHT>px;width:$=<PAR:BEYE_WIDTH>px;z-index:50;">
+<tr><td align=center valign=center>
+<form method=get 
+$=<IF:$=<PAR:BEYE_TYPE>==0?
+action="http://lingvo.yandex.ru/en"
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==1?
+action="http://lingvo.yandex.ru/de"
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==2?
+action="http://lingvo.yandex.ru/fr"
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==3?
+action="http://lingvo.yandex.ru/it"
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==4?
+action="http://lingvo.yandex.ru/es"
+/IF>
+><input type=text name=text style="width:$=<PAR:BEYE_WIDTH>px;">
+$=<IF:$=<PAR:BEYE_TRIM>==1?
+<input type=submit value="$=<TEXTLINE(comm_l$=<LANG>.txt,Translate=)>" style="color: #336699; border: outset 1px 1px 1px 1px; border-color: #9fdfff; background-color: #cfefff; font-size: 8pt; font-weight:bold">
+/IF>
+</form>
+</td></tr>
+</table>

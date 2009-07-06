@@ -1,0 +1,72 @@
+$=<TITLE:EleFun wallpaper>$=<SHOWINTRAY:PARAM_ROOT,!SITE>$=<CATEG:Entertainment>
+$=<DESCRIPTION:
+Adds animated wallpaper from www.elefun-desktops.com
+Widget can also merge animation with random image.
+At list one animated wallpaper must be installed before activating this widget
+>
+$=<PREVIEW:Preview/AnimatedWp.jpg>
+$=<RENDER:EasyDraw.dll>$=<ALTRENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-LAST),ONLINE-STATE=(DONTCARE),NO-DUPS,NO-SCREENSAVER>
+$=<PARDEF:PARAM_ROOT>$=<PARDSC:PARAM_ROOT=EleFun wallpaper options>$=<PARTYP:PARAM_ROOT=root>
+$=<PARDEF:POS_FOLDER>$=<PARDSC:POS_FOLDER=You should set folder with EleFun wallpaper>$=<PARTYP:POS_FOLDER=tip>
+$=<PARDEF:SIMAGE_CFOLDER=none>$=<PARDSC:SIMAGE_CFOLDER=Choose animated wallpaper>$=<PARPAR:SIMAGE_CFOLDER=PARAM_ROOT>$=<PARTYP:SIMAGE_CFOLDER=dirlist>$=<PARLST:SIMAGE_CFOLDER=HKLM:Software\EleFun Multimedia\Wallpapers>$=<PARERR:SIMAGE_CFOLDER=Warning: Elefun wallpapers not found. Please install one of the wallpapers from www.elefun-desktops.com first>
+$=<PARDEF:BEYE_MINI=1>$=<PARDSC:BEYE_MINI=Show wallpaper in High quality>$=<PARTYP:BEYE_MINI=bool>
+$=<PARDEF:BEYE_MUTE=0>$=<PARDSC:BEYE_MUTE=Mute sound>$=<PARTYP:BEYE_MUTE=bool>
+$=<PARDEF:BEYE_MERGL=0>$=<PARDSC:BEYE_MERGL=Merge animation with wallpaper>$=<PARTYP:BEYE_MERGL=list>$=<PARLST:BEYE_MERGL=Do not merge,Random,Dissolve merge,To the Dark side,To the Light side>
+$=<PARDEF:SITE>$=<PARDSC:SITE=Download more animations>$=<PARACTION:SITE=http://www.wiredplane.com/guestbook/awps.php/>$=<PARTYP:SITE=action>
+$=<PARDEF:SIMAGE_CFOLDER-PATH="">$=<PARTYP:SIMAGE_CFOLDER-PATH=hidden>
+
+$=<HASH:BC8A642197F0903BC96A541571B9BA4E>
+
+{wp:body}$=<IF-ELEFUNOK:BEGIN|$=<PAR:SIMAGE_CFOLDER-PATH>==""
+|IF-ELEFUNOK:THEN|
+{wp:ShowAlert(You should define Animated Wallpaper properties first)/}
+{wp:ShowOptions(AnimatedWp)/}
+|IF-ELEFUNOK:ELSE|
+<!--
+<image-in-rect>
+X:(0)
+Y:(0)
+W:({screenX})
+H:({screenY})
+EFFECT:(SETCOLOR)
+EFFECT-SETCOLOR:(#050203)
+EFFECT-SETCOLOR-LEVEL:($=<PAR:BEYE_MERGL>)
+<image-src>$=<RND_WALLPAPER(main)></image-src>
+</image-in-rect>
+-->
+
+$=<IF-FOLDEROK:$=<PAR:SIMAGE_CFOLDER>!=""?
+	$=<COPYFILE($=<REGKEY(HKLM:$=<PAR:SIMAGE_CFOLDER-PATH>,InstallPath)>\input.swf|$=<APPDATPATH>input.swf)>
+	$=<COPYFILE($=<REGKEY(HKLM:$=<PAR:SIMAGE_CFOLDER-PATH>,InstallPath)>\mute.swf|$=<APPDATPATH>mute.swf)>
+	$=<COPYFILE($=<REGKEY(HKLM:$=<PAR:SIMAGE_CFOLDER-PATH>,InstallPath)>\ms.swf|$=<APPDATPATH>ms.swf)>
+	$=<IF-MAIN:$=<PAR:SIMAGE_CFOLDER>!=""?
+	<div style='position: absolute; z-index: 0; left:0; top:0; width: {screenX}; height: {screenY};'>
+		<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
+		WIDTH="100%" HEIGHT="100%">
+		$=<IF-MUTE:$=<PAR:BEYE_MUTE>==1?
+		<PARAM NAME=movie VALUE="mute.swf">
+		/IF-MUTE>
+		$=<IF-NO_MUTE:$=<PAR:BEYE_MUTE>==0?
+		<PARAM NAME=movie VALUE="input.swf">
+		/IF-NO_MUTE>
+		<PARAM NAME=quality VALUE="$=<IF:$=<PAR:BEYE_MINI>=1?high/IF>$=<IF:$=<PAR:BEYE_MINI>=0?low/IF>">
+		<PARAM NAME=wmode VALUE=transparent> 
+		<PARAM NAME=bgcolor VALUE=#FFFFFF>
+		</OBJECT>
+	</div>
+	/IF-MAIN>
+/IF-FOLDEROK>
+
+<div 
+style="
+	position:absolute;
+	z-index: 1;
+	top:0px;
+	left:0px;
+	height:{screenY}px;
+	width:{screenX}px;
+	filter:progid:DXImageTransform.Microsoft.Chroma(color=#050203);"
+><!-- 	$=<IF:$=<PAR:CLN_OPACITY>!=100?filter:Alpha(opacity=$=<PAR:CLN_OPACITY>);/IF> -->
+<img src="$=<_WALLPAPER_FEATURED>" width=100% height=100%>
+</div>
+|IF-ELEFUNOK:END>{/wp:body}

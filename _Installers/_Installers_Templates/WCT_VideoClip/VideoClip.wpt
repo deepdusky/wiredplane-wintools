@@ -1,0 +1,59 @@
+$=<TITLE:Video clip>$=<SHOWINTRAY:PARAM_ROOT>$=<CATEG:Additional elements>
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(DONTCARE),WIN98WARN=(Please note: Some features are not supported on Win98/WinME)>
+<!-- tray-position{OC:(1),X:(SIMAGEXPOS),Y:(SIMAGEYPOS),W:(SIMAGEWIDTH),H:(SIMAGEHEIGHT)} -->
+
+$=<PARDEF:PARAM_ROOT>$=<PARDSC:PARAM_ROOT=Video clip>$=<PARTYP:PARAM_ROOT=root>
+$=<PARDEF:SIMAGECONT=0>$=<PARDSC:SIMAGECONT=Show clip controls>$=<PARPAR:SIMAGECONT=PARAM_ROOT>$=<PARTYP:SIMAGECONT=bool>
+$=<PARDEF:BEYE_TRIM=0>$=<PARDSC:BEYE_TRIM=Mute sound>$=<PARTYP:BEYE_TRIM=bool>
+$=<PARDEF:SRC_TYPE=0>$=<PARDSC:SRC_TYPE=Where to get clip>$=<PARPAR:SRC_TYPE=PARAM_ROOT>$=<PARTYP:SRC_TYPE=list>$=<PARLST:SRC_TYPE=Single file,Random file in folder>
+$=<PARDEF:POS_FILE>$=<PARDSC:POS_FILE=Choose clip file to be placed at your desktop>$=<PARTYP:POS_FILE=tip>
+$=<PARDEF:SIMAGE_CFILE=[Choose file from disk]>$=<PARDSC:SIMAGE_CFILE=Clip file>$=<PARPAR:SIMAGE_CFILE=PARAM_ROOT>$=<PARTYP:SIMAGE_CFILE=file>
+$=<PARDEF:POS_FOLDER>$=<PARDSC:POS_FOLDER=Or folder with clips. Random clip will be taken every time you change your wallpaper>$=<PARTYP:POS_FOLDER=tip>
+$=<PARDEF:SIMAGE_CFOLDER=[Or choose folder from disk]>$=<PARDSC:SIMAGE_CFOLDER=Folder with animated images>$=<PARPAR:SIMAGE_CFOLDER=PARAM_ROOT>$=<PARTYP:SIMAGE_CFOLDER=directory>
+$=<PARDEF:POS_TIP>$=<PARDSC:POS_TIP=Clip size and position>$=<PARTYP:POS_TIP=tip>
+$=<PARDEF:SIMAGESPOS>$=<PARDSC:SIMAGESPOS=Set Clip position>$=<PARPAR:SIMAGESPOS=PARAM_ROOT>$=<PARTYP:SIMAGESPOS=set_position>$=<PARACTION:SIMAGESPOS=OC:(1),X:(SIMAGEXPOS),Y:(SIMAGEYPOS),W:(SIMAGEWIDTH),H:(SIMAGEHEIGHT)/>
+$=<PARDEF:SIMAGEXPOS=300>$=<PARDSC:SIMAGEXPOS=X Position (pixels)>$=<PARTYP:SIMAGEXPOS=number>$=<PARMIN:SIMAGEXPOS=0>$=<PARMAX:SIMAGEXPOS={screenX}>$=<PAROC:SIMAGEXPOS=1>$=<PARPAR:SIMAGEXPOS=SIMAGESPOS>
+$=<PARDEF:SIMAGEYPOS=50>$=<PARDSC:SIMAGEYPOS=Y Position (pixels)>$=<PARTYP:SIMAGEYPOS=number>$=<PARMIN:SIMAGEYPOS=0>$=<PARMAX:SIMAGEYPOS={screenY}>$=<PAROC:SIMAGEYPOS=1>$=<PARPAR:SIMAGEYPOS=SIMAGESPOS>
+$=<PARDEF:SIMAGEWIDTH=210>$=<PARDSC:SIMAGEWIDTH=Width (pixels)>$=<PARTYP:SIMAGEWIDTH=number>$=<PARMIN:SIMAGEWIDTH=20>$=<PARMAX:SIMAGEWIDTH={screenX}>$=<PAROC:SIMAGEWIDTH=1>$=<PARPAR:SIMAGEWIDTH=SIMAGESPOS>
+$=<PARDEF:SIMAGEHEIGHT=160>$=<PARDSC:SIMAGEHEIGHT=Height (pixels)>$=<PARTYP:SIMAGEHEIGHT=number>$=<PARMIN:SIMAGEWIDTH=20>$=<PARMAX:SIMAGEHEIGHT={screenY}>$=<PAROC:SIMAGEHEIGHT=1>$=<PARPAR:SIMAGEHEIGHT=SIMAGESPOS>
+<!-- Для совместимости пишем в новом стиле и в комментарии: tray-position{OC:(1),X:(SIMAGEXPOS),Y:(SIMAGEYPOS),W:(SIMAGEWIDTH),H:(SIMAGEHEIGHT)} -->
+$=<PAR:CUTLINE>
+<table border=0
+	style='position: absolute; left:$=<PAR:SIMAGEXPOS>px; top:$=<PAR:SIMAGEYPOS>px; 
+	width: $=<PAR:SIMAGEWIDTH>px; height: $=<PAR:SIMAGEHEIGHT>px; 
+	z-index: 100;'>
+<tr><td align=center valign=center>
+<object id="MediaPlayer1"
+height=100% width=100%
+classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6"
+type="application/x-oleobject">
+<param name="AutoStart" value="true">
+<param name="PlayCount" value="10000">
+$=<IF:$=<PAR:SIMAGECONT>==0?
+<param name="ShowStatusBar" value="false">
+<param name="ShowDisplay" value="false">
+<param name="EnablePositionControls" value="false">
+<param name="EnableTracker" value="false">
+<param name="ShowAudioControls" value="false">
+<param name="ShowPositionControls" value="false">
+<param name="ShowControls" value="false">
+<param name="uiMode" value="none">
+/IF>
+$=<IF:$=<PAR:BEYE_TRIM>==1?
+<param name="Mute" value="1">
+/IF>
+$=<IF:$=<PAR:SIMAGECONT>!=0?
+<param name="uiMode" value="full">
+<param name="EnablePositionControls" value="true">
+<param name="ShowPositionControls" value="true">
+<param name="ShowControls" value="true">
+/IF>
+$=<IF-MAIN1:$=<PAR:SRC_TYPE>==0?
+<param name="URL" value="$=<PAR:SIMAGE_CFILE>">
+/IF-MAIN1>
+$=<IF-MAIN2:$=<PAR:SRC_TYPE>!=0?
+<param name="URL" value="$=<RND_WALLPAPER($=<PAR:SIMAGE_CFOLDER>,fff,*.wav;*.mp3;*.mov;*.wmv;*.dat;*.avi;*.mpg)>">
+/IF-MAIN2>
+</object>
+</td></tr>
+</table>
