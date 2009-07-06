@@ -1,0 +1,100 @@
+$=<TITLE:Big Eyes>$=<SHOWINTRAY:BEYE_ROOT>$=<CATEG:Desktop creatures>
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(DONTCARE),WIN98WARN=(Please note: Some features are not supported on Win98/WinME)>
+tray-position{OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)}
+$=<PARDEF:BEYE_ROOT>$=<PARDSC:BEYE_ROOT=Big Eyes options>$=<PARTYP:BEYE_ROOT=root>
+$=<PARDEF:BEYE_SPOS>$=<PARDSC:BEYE_SPOS=Set Eyes position>$=<PARPAR:BEYE_SPOS=BEYE_ROOT>$=<PARTYP:BEYE_SPOS=set_position>$=<PARACTION:BEYE_SPOS=OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)/>
+$=<PARDEF:BEYE_XPOS=255>$=<PARDSC:BEYE_XPOS=X Position (pixels)>$=<PARTYP:BEYE_XPOS=number>$=<PARMIN:BEYE_XPOS=0>$=<PARMAX:BEYE_XPOS=$=<SCREEN_X>>$=<PAROC:BEYE_XPOS=1>$=<PARPAR:BEYE_XPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_YPOS=$=<INTEXPR($=<SCREEN_Y>-125)>>$=<PARDSC:BEYE_YPOS=Y Position (pixels)>$=<PARTYP:BEYE_YPOS=number>$=<PARMIN:BEYE_YPOS=0>$=<PARMAX:BEYE_YPOS=$=<SCREEN_Y>>$=<PAROC:BEYE_YPOS=1>$=<PARPAR:BEYE_YPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_WIDTH=205>$=<PARDSC:BEYE_WIDTH=Width (pixels)>$=<PARTYP:BEYE_WIDTH=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_WIDTH=$=<SCREEN_X>>$=<PAROC:BEYE_WIDTH=1>$=<PARPAR:BEYE_WIDTH=BEYE_SPOS>
+$=<PARDEF:BEYE_HEIGHT=102>$=<PARDSC:BEYE_HEIGHT=Height (pixels)>$=<PARTYP:BEYE_HEIGHT=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_HEIGHT=$=<SCREEN_Y>>$=<PAROC:BEYE_HEIGHT=1>$=<PARPAR:BEYE_HEIGHT=BEYE_SPOS>
+
+{wp:body}
+<script language="JavaScript1.2">
+//Static Eyes - http://www.btinternet.com/~kurt.grigg/javascript 
+if  ((document.getElementById) && 
+window.addEventListener || window.attachEvent){
+
+(function(){
+var e_img = new Image();
+e_img.src = "$=<BASEPATH>/images/bigeye.gif"; 
+var p_img = new Image();
+p_img.src = "$=<BASEPATH>/images/bigpupil.gif";
+
+var d = document;
+var pix = "px";
+
+var idx = document.images.length;
+if (document.getElementById("cont"+idx)) idx++;
+
+var eyeballs = "";
+var pupil1 = "";
+var pupil2 = "";
+
+d.write('<div id="cont'+idx+'" class="eyestyle" style="position:absolute;top:$=<PAR:BEYE_YPOS>px;left:$=<PAR:BEYE_XPOS>px;height:$=<PAR:BEYE_HEIGHT>px;width:$=<PAR:BEYE_WIDTH>px">'
++'<div id="eyblls'+idx+'" style="position:relative;width:$=<PAR:BEYE_WIDTH>px;height:$=<PAR:BEYE_HEIGHT>px"><img src="'+e_img.src+'" alt=""/>'
++'<img id="ppl1'+idx+'" src="'+p_img.src+'" alt="" style="position:absolute;top:37px;left:37px;width:27px;height:27px"/>'
++'<img id="ppl2'+idx+'" src="'+p_img.src+'" alt="" style="position:absolute;top:37px;left:140px;width:27px;height:27px"/>'
++'<\/div><\/div>');
+
+function watchTheMouse(y,x){
+var osy = eyeballs.offsetTop;
+var osx = eyeballs.offsetLeft;
+var c1y = osy + 51;
+var c1x = osx + 51;
+var c2y = osy + 51;
+var c2x = osx + 154;
+var dy1 = y - c1y;
+var dx1 = x - c1x;
+var d1 = Math.sqrt(dy1*dy1 + dx1*dx1);
+var dy2 = y - c2y;
+var dx2 = x - c2x;
+var d2 = Math.sqrt(dy2*dy2 + dx2*dx2);
+var ay1 = y - c1y;
+var ax1 = x - c1x;
+var angle1 = Math.atan2(ay1,ax1)*180/Math.PI;
+var ay2 = y - c2y;
+var ax2 = x - c2x;
+var angle2 = Math.atan2(ay2,ax2)*180/Math.PI;
+var dv = 1.36;
+var onEyeBall1 = (d1 < 51)?d1/dv:37;
+var onEyeBall2 = (d2 < 51)?d2/dv:37;
+pupil1.top = c1y-13+onEyeBall1 * Math.sin(angle1*Math.PI/180)-osy+pix;
+pupil1.left = c1x-13+onEyeBall1 * Math.cos(angle1*Math.PI/180)-osx+pix;
+pupil2.top = c2y-13+onEyeBall2 * Math.sin(angle2*Math.PI/180)-osy+pix;
+pupil2.left = c2x-13+onEyeBall2  *Math.cos(angle2*Math.PI/180)-osx+pix;
+}
+
+function mouse(e){
+var y,x;
+if (!e) e = window.event;    
+ if (typeof e.pageY == 'number'){
+  y = e.pageY;
+  x = e.pageX;
+ }
+ else{
+ var ref = document.documentElement||document.body;
+ y = e.clientY + ref.scrollTop;
+ x = e.clientX + ref.scrollLeft;
+}
+watchTheMouse(y-$=<PAR:BEYE_YPOS>,x-$=<PAR:BEYE_XPOS>);
+}
+
+function init(){
+eyeballs = d.getElementById("eyblls"+idx);
+pupil1 = d.getElementById("ppl1"+idx).style;
+pupil2 = d.getElementById("ppl2"+idx).style;
+}
+
+if (window.addEventListener){
+ window.addEventListener("load",init,false);
+ document.addEventListener("mousemove",mouse,false);
+}  
+else if (window.attachEvent){
+ window.attachEvent("onload",init);
+ document.attachEvent("onmousemove",mouse);
+} 
+
+})();
+}//End.
+</script>
+{/wp:body}

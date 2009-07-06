@@ -1,0 +1,202 @@
+$=<TITLE:Square Wriggly>$=<CATEG:Desktop creatures>
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(DONTCARE),WIN98WARN=(Please note: Some features are not supported on Win98/WinME)>
+
+$=<PAR:CUTLINE>
+<script language="JavaScript1.2">
+//Wriggly by Kurt Grigg - http://www.btinternet.com/~kurt.grigg/javascript
+
+if  ((document.getElementById) && 
+window.addEventListener || window.attachEvent){
+
+(function(){
+
+//Configure here....
+
+var colours = new Array('#ff0000','#00ff00','#ffa500','#fff000');
+var num = 10;    //number of segments.
+var icen = 2;    //next segment is times 'icen' previous segment size.
+var rep = 40;    //setTimeout speed.
+var min = 0;     //slowest speed.
+var max = 10;    //fastest speed.
+
+//End.
+
+var temp1 = new Array();
+var temp2 = new Array();
+if (icen%2 != 0) icen++;
+var fcen = icen/2;
+var d = document;
+var idx = d.getElementsByTagName('div').length;
+
+var dims;
+
+for (i = 0; i < num; i++){
+var randcol = colours[Math.floor(Math.random()*colours.length)];
+var dims = (i+1) * icen;
+document.write('<div id="worm'+(idx+i)+'" style="position:absolute;top:0px;left:0px;width:'
++dims+'px;height:'+dims+'px;font-size:1px;border: 1px solid '+randcol+';overflow:hidden">.<\/div>');
+}
+
+var h,w,r;
+var y = 0;
+var x = 0;
+var dir = 45;   //direction.
+var acc = 1;    //acceleration.
+var newacc = new Array(1,0,1);
+var vel = 1;    //initial speed.
+var sev = 0;
+var newsev = new Array(8,-8,5,-5,3,-3,1,-1,0);
+
+//counters.
+var c1 = 0;    //time between changes.
+var c2 = 0;    //new time between changes.
+
+var pix = "px";
+
+var strictmod = ((document.compatMode) && 
+document.compatMode.indexOf("CSS") != -1);
+
+
+var domWw = (typeof window.innerWidth == "number");
+var domSy = (typeof window.pageYOffset == "number");
+
+if (domWw) r = window;
+else{ 
+  if (d.documentElement && 
+  typeof d.documentElement.clientWidth == "number" && 
+  d.documentElement.clientWidth != 0)
+  r = d.documentElement;
+ else{ 
+  if (d.body && 
+  typeof d.body.clientWidth == "number")
+  r = d.body;
+ }
+}
+
+
+function winsize(){
+var oh,sy,ow,sx,rh,rw;
+if (domWw){
+  if (d.documentElement && d.defaultView && 
+  typeof d.defaultView.scrollMaxY == "number"){
+  oh = d.documentElement.offsetHeight;
+  sy = d.defaultView.scrollMaxY;
+  ow = d.documentElement.offsetWidth;
+  sx = d.defaultView.scrollMaxX;
+  rh = oh-sy;
+  rw = ow-sx;
+ }
+ else{
+  rh = r.innerHeight;
+  rw = r.innerWidth;
+ }
+h = rh - (dims+fcen+1);
+w = rw - (dims+fcen+1);
+}
+else{
+h = r.clientHeight - (dims+fcen+1);
+w = r.clientWidth - (dims+fcen+1);
+}
+}
+
+
+function scrl(yx){
+var y,x;
+if (domSy){
+ y = r.pageYOffset;
+ x = r.pageXOffset;
+ }
+else{
+ y = r.scrollTop;
+ x = r.scrollLeft;
+ }
+return (yx == 0)?y:x;
+}
+
+
+function followleader(){
+ for (i = 0; i < num; i++){
+  if (i < num-1){
+   temp1[i].top = parseFloat(temp2[i].top)  + fcen + pix;
+   temp1[i].left = parseFloat(temp2[i].left) + fcen + pix;
+  } 
+  else{
+   temp1[i].top = y  + scrl(0) + pix;
+   temp1[i].left = x + scrl(1) + pix;
+  }
+ }
+}
+
+
+function newpath(){
+sev = newsev[Math.floor(Math.random()*newsev.length)];
+acc = newacc[Math.floor(Math.random()*newacc.length)];
+c2 = Math.floor(10+Math.random()*50);
+}
+
+
+function animate(){
+var vb,hb,dy,dx,curr;
+if (acc == 1) vel +=0.05;
+if (acc == 0) vel -=0.05;
+if (vel >= max) vel = max;
+if (vel <= min) vel = min;
+c1++;
+if (c1 >= c2){
+ newpath();
+ c1=0;
+}
+curr = dir+=sev;
+
+dy = vel * Math.sin(curr*Math.PI/180);
+dx = vel * Math.cos(curr*Math.PI/180);
+
+y+=dy;
+x+=dx;
+
+//horizontal-vertical bounce.
+vb = 180-dir;
+hb = 0-dir;
+
+//Corner rebounds?
+if ((y < 1) && (x < 1)){y = 1; x = 1; dir = 45;}
+if ((y < 1) && (x > w)){y = 1; x = w; dir = 135;}
+if ((y > h) && (x < 1)){y = h; x = 1; dir = 315;}
+if ((y > h) && (x > w)){y = h; x = w; dir = 225;}
+
+//edge rebounds.
+if (y < 1) {y = 1; dir = hb;}  
+if (y > h) {y = h; dir = hb;}  
+if (x < 1) {x = 1; dir = vb;} 
+if (x > w) {x = w; dir = vb;} 
+
+followleader();
+setTimeout(animate,rep);
+}
+
+
+function init(){
+for (i=0; i < num; i++){
+ temp1[i] = document.getElementById("worm"+(idx+i)).style;
+ if (i < num-1)
+ temp2[i] = document.getElementById("worm"+(idx+(i+1))).style; 
+}
+winsize();
+
+var iniafter = Math.floor(500+Math.random()*2000);
+setTimeout(animate,iniafter);
+}
+
+
+if (window.addEventListener){
+ window.addEventListener("resize",winsize,false);
+ window.addEventListener("load",init,false);
+}  
+else if (window.attachEvent){
+ window.attachEvent("onresize",winsize);
+ window.attachEvent("onload",init);
+} 
+
+})();
+}//End.
+</script>

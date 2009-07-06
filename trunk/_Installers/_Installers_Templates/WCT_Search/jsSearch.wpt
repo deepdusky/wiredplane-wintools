@@ -1,0 +1,37 @@
+$=<TITLE:Search the web>$=<SHOWINTRAY:BEYE_ROOT>$=<CATEG:Useful controls>
+tray-position{OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)}
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(DONTCARE)>
+$=<PARDEF:BEYE_ROOT>$=<PARDSC:BEYE_ROOT=Search options>$=<PARTYP:BEYE_ROOT=root>
+$=<PARDEF:BEYE_TYPE=0>$=<PARDSC:BEYE_TYPE=Search engine>$=<PARTYP:BEYE_TYPE=list>$=<PARLST:BEYE_TYPE=Google,MSN,Yahoo,Yandex>
+$=<PARDEF:BEYE_BUTT=1>$=<PARDSC:BEYE_BUTT=Show 'Search' button>$=<PARTYP:BEYE_BUTT=bool>
+
+$=<PARDEF:BEYE_SPOS>$=<PARDSC:BEYE_SPOS=Set search bar position>$=<PARPAR:BEYE_SPOS=BEYE_ROOT>$=<PARTYP:BEYE_SPOS=set_position>$=<PARACTION:BEYE_SPOS=OC:(1),X:(BEYE_XPOS),Y:(BEYE_YPOS),W:(BEYE_WIDTH),H:(BEYE_HEIGHT)/>
+$=<PARDEF:BEYE_XPOS=255>$=<PARDSC:BEYE_XPOS=X Position (pixels)>$=<PARTYP:BEYE_XPOS=number>$=<PARMIN:BEYE_XPOS=0>$=<PARMAX:BEYE_XPOS={screenX}>$=<PAROC:BEYE_XPOS=1>$=<PARPAR:BEYE_XPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_YPOS=$=<INTEXPR({screenY}-225)>>$=<PARDSC:BEYE_YPOS=Y Position (pixels)>$=<PARTYP:BEYE_YPOS=number>$=<PARMIN:BEYE_YPOS=0>$=<PARMAX:BEYE_YPOS={screenY}>$=<PAROC:BEYE_YPOS=1>$=<PARPAR:BEYE_YPOS=BEYE_SPOS>
+$=<PARDEF:BEYE_WIDTH=205>$=<PARDSC:BEYE_WIDTH=Width (pixels)>$=<PARTYP:BEYE_WIDTH=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_WIDTH={screenX}>$=<PAROC:BEYE_WIDTH=1>$=<PARPAR:BEYE_WIDTH=BEYE_SPOS>
+$=<PARDEF:BEYE_HEIGHT=102>$=<PARDSC:BEYE_HEIGHT=Height (pixels)>$=<PARTYP:BEYE_HEIGHT=number>$=<PARMIN:BEYE_WIDTH=20>$=<PARMAX:BEYE_HEIGHT={screenY}>$=<PAROC:BEYE_HEIGHT=1>$=<PARPAR:BEYE_HEIGHT=BEYE_SPOS>
+
+$=<PAR:CUTLINE>
+<table style="position:absolute;top:$=<PAR:BEYE_YPOS>px;left:$=<PAR:BEYE_XPOS>px;height:$=<PAR:BEYE_HEIGHT>px;width:$=<PAR:BEYE_WIDTH>px;z-index:50;">
+<tr><td align=center valign=center>
+<form method=get 
+$=<IF:$=<PAR:BEYE_TYPE>==0?
+action="http://www.google.com/search"><input type=text name=q
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==1?
+action="http://beta.search.msn.com/results.aspx"><input type=text name=q
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==2?
+action="http://search.yahoo.com/search"><input type=text name=p
+/IF>
+$=<IF:$=<PAR:BEYE_TYPE>==3?
+action="http://www.yandex.ru/yandsearch"><input type=text name=text
+/IF>
+ style="width:$=<PAR:BEYE_WIDTH>px;"
+ >
+$=<IF:$=<PAR:BEYE_BUTT>==1?
+<input type=submit value="$=<TEXTLINE(comm_l{lang}.txt,Search=)>" style="color: #336699; border: outset 1px 1px 1px 1px; border-color: #9fdfff; background-color: #cfefff; font-size: 8pt; font-weight:bold">
+/IF>
+</form>
+</td></tr>
+</table>

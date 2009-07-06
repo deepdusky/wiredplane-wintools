@@ -1,0 +1,189 @@
+$=<TITLE:Small Eyes>$=<CATEG:Desktop creatures>
+$=<RENDER:ActiveDesktop>$=<HINTS:RENDER-LAYER=(BG-1),ONLINE-STATE=(DONTCARE),WIN98WARN=(Please note: Some features are not supported on Win98/WinME)>
+
+{wp:body}
+<script language="JavaScript1.2">
+//Following Eyes - http://www.btinternet.com/~kurt.grigg/javascript
+
+if  ((document.getElementById) && 
+window.addEventListener || window.attachEvent){
+
+(function(){
+
+var e_img = new Image();
+e_img.src = "$=<BASEPATH>/images/eye.gif"; 
+
+var p_img = new Image();
+p_img.src = "$=<BASEPATH>/images/pupils.gif";
+
+var idx = document.images.length;
+if ( document.getElementById("pic"+idx) ||
+document.getElementById("ppl1"+idx) ||
+document.getElementById("ppl2"+idx)) idx++;
+
+document.write('<img id="eyblls'+idx+'" src="'+e_img.src+'" alt="" style="position:absolute;top:0px;left:0px;width:69px;height:34px"/>'
++'<img id="ppl1'+idx+'" src="'+p_img.src+'" alt="" style="position:absolute;top:10px;left:11px;width:13px;height:13px"/>'
++'<img id="ppl2'+idx+'" src="'+p_img.src+'" alt="" style="position:absolute;top:10px;left:46px;width:13px;height:13px"/>');
+
+var h,w,r,eyeballs,pupil1,pupil2;
+var d = document;
+var my = 0;
+var mx = 0;
+var fy = 0;
+var fx = 0;
+
+var pix = "px";
+var domWw = (typeof window.innerWidth == "number");
+var domSy = (typeof window.pageYOffset == "number");
+
+if (domWw) r = window;
+else{ 
+  if (d.documentElement && 
+  typeof d.documentElement.clientWidth == "number" && 
+  d.documentElement.clientWidth != 0)
+  r = d.documentElement;
+ else{ 
+  if (d.body && 
+  typeof d.body.clientWidth == "number")
+  r = d.body;
+ }
+}
+
+
+function winsize(){
+var oh,sy,ow,sx,rh,rw;
+if (domWw){
+  if (d.documentElement && d.defaultView && 
+  typeof d.defaultView.scrollMaxY == "number"){
+  oh = d.documentElement.offsetHeight;
+  sy = d.defaultView.scrollMaxY;
+  ow = d.documentElement.offsetWidth;
+  sx = d.defaultView.scrollMaxX;
+  rh = oh-sy;
+  rw = ow-sx;
+ }
+ else{
+  rh = r.innerHeight;
+  rw = r.innerWidth;
+ }
+h = rh; 
+w = rw;
+}
+else{
+h = r.clientHeight; 
+w = r.clientWidth;
+}
+}
+
+
+function scrl(yx){
+var y,x;
+if (domSy){
+ y = r.pageYOffset;
+ x = r.pageXOffset;
+ }
+else{
+ y = r.scrollTop;
+ x = r.scrollLeft;
+ }
+return (yx == 0)?y:x;
+}
+
+
+function mouse(e){
+var msy = (domSy)?window.pageYOffset:0;
+if (!e) e = window.event;    
+ if (typeof e.pageY == 'number'){
+  my = e.pageY - msy;
+  mx = e.pageX;
+ }
+ else{
+  my = e.clientY - msy;
+  mx = e.clientX;
+ }
+}
+
+
+function makefollow(){
+
+var sy = scrl(0);
+var sx = scrl(1);
+
+//Keep eyes on screen.
+var chy = Math.floor(fy-50);
+if (chy <= 0) chy = 0;
+if (chy >= h-50) chy = h-50;
+
+var chx=Math.floor(fx-34);
+if (chx <= 0) chx = 0;
+if (chx >= w-69) chx = w-69;
+
+//eyeball1 centre.
+var c1y = chy+17;
+var c1x = chx+17;
+
+//eyeball2 centre.
+var c2y = chy+17;
+var c2x = chx+52;
+
+var dy1 = my - c1y;
+var dx1 = mx - c1x;//80
+var d1 = Math.sqrt(dy1*dy1 + dx1*dx1);
+
+var dy2 = my - c2y;
+var dx2 = mx - c2x;
+var d2 = Math.sqrt(dy2*dy2 + dx2*dx2);
+
+var ay1 = my - c1y;
+var ax1 = mx - c1x;
+var angle1 = Math.atan2(ay1,ax1)*180/Math.PI;
+
+var ay2 = my - c2y;
+var ax2 = mx - c2x;
+var angle2 = Math.atan2(ay2,ax2)*180/Math.PI;
+
+var dv = 1.7;
+var onEyeBall1 = (d1 < 17)?d1/dv:10;
+var onEyeBall2 = (d2 < 17)?d2/dv:10;
+
+eyeballs.top = chy+sy+pix;
+eyeballs.left = chx+sx+pix;
+pupil1.top = c1y-6+onEyeBall1*Math.sin(angle1*Math.PI/180)+sy+pix;
+pupil1.left = c1x-6+onEyeBall1*Math.cos(angle1*Math.PI/180)+sx+pix;
+pupil2.top = c2y-6+onEyeBall2*Math.sin(angle2*Math.PI/180)+sy+pix;
+pupil2.left = c2x-6+onEyeBall2*Math.cos(angle2*Math.PI/180)+sx+pix;
+}
+
+
+function move(){
+ dy = fy += (my-fy) * 0.05;
+ dx = fx += (mx-fx) * 0.05;
+ makefollow();
+ setTimeout(move,30);
+}
+
+
+function init(){
+eyeballs = document.getElementById("eyblls"+idx).style;
+pupil1 = document.getElementById("ppl1"+idx).style;
+pupil2 = document.getElementById("ppl2"+idx).style;
+winsize();
+move();
+}
+
+
+if (window.addEventListener){
+ window.addEventListener("resize",winsize,false);
+ window.addEventListener("load",init,false);
+ document.addEventListener("mousemove",mouse,false);
+}  
+else if (window.attachEvent){
+ window.attachEvent("onresize",winsize);
+ window.attachEvent("onload",init);
+ document.attachEvent("onmousemove",mouse);
+} 
+
+})();
+}//End.
+</script>
+{/wp:body}
